@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: satlink-planner
+    env: docker
+    plan: free
+    dockerCommand: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: SERVE_STATIC
+        value: "1"
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false

@@ -216,3 +216,102 @@ INFO:     127.0.0.1:56166 - "GET /api/v1/passes/ HTTP/1.1" 422 Unprocessable Ent
 INFO:     127.0.0.1:56166 - "GET /api/v1/passes/ HTTP/1.1" 422 Unprocessable Entity
 INFO:     127.0.0.1:56166 - "GET /api/v1/passes/ HTTP/1.1" 422 Unprocessable Entity
 INFO:     127.0.0.1:56170 - "GET /api/v1/passes/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:57906 - "GET /api/docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57906 - "GET /api/openapi.json HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [47705]
+Shutting down SatLink Planner API...
+INFO:     Started server process [65360]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_health.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [65360]
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+Shutting down SatLink Planner API...
+INFO:     Started server process [65404]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/db.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [65404]
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+Shutting down SatLink Planner API...
+INFO:     Started server process [67190]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in '.venv/lib/python3.11/site-packages/pip/__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [67190]
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+Shutting down SatLink Planner API...
+INFO:     Started server process [67663]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+INFO:     127.0.0.1:51092 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51134 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51180 - "GET /openapi.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51228 - "GET /api/health HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/config.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [67663]
+Shutting down SatLink Planner API...
+INFO:     Started server process [69324]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+INFO:     127.0.0.1:51372 - "GET /api/health HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in '.venv/lib/python3.9/site-packages/pip/__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [69324]
+Shutting down SatLink Planner API...
+INFO:     Started server process [70928]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in '.venv/lib/python3.9/site-packages/pip/__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [70928]
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+Shutting down SatLink Planner API...
+INFO:     Started server process [70936]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Starting SatLink Planner API…
+[DB] Creating all tables via SQLAlchemy metadata …
+[DB] Tables created.
+INFO:     127.0.0.1:51528 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51539 - "GET /docs HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [70936]
+Shutting down SatLink Planner API...
+INFO:     Stopping reloader process [43348]

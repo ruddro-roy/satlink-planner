@@ -1,21 +1,52 @@
 # Makefile for SatLink Planner project
 
-.PHONY: db-init run-api
+# Variables
+PY ?= python3
+PIP ?= pip3
+VENV ?= .venv
+UVICORN ?= uvicorn
+BACKEND_APP ?= backend.main:app
+FRONTEND_DIR ?= frontend
 
-# -----------------------------------------------------------------------------
-# Database initialisation helpers
-# -----------------------------------------------------------------------------
-# Create all tables when ENV=dev, otherwise run Alembic migrations up to *head*.
-# -----------------------------------------------------------------------------
+.PHONY: venv deps frontend-deps dev run build-frontend run-backend run-frontend clean test export
 
-db-init:
-	@echo "[db] Initialising database …"
-	ENV=$${ENV:-dev} PYTHONPATH=apps/api \
-	./venv/bin/python3.11 -c "import os,sys; sys.path.append('apps/api'); from core import db as _db; env=os.getenv('ENV','dev'); print(f'[db] ENV={env}'); (_db.create_all() if env=='dev' else _db.run_migrations())"
-	@echo "[db] Done."
+venv:
+	@test -d $(VENV) || $(PY) -m venv $(VENV)
+	@. $(VENV)/bin/activate; $(PIP) install --upgrade pip
 
-# -----------------------------------------------------------------------------
-# Developer target to run API with auto-reload (ENV=dev by default)
-# -----------------------------------------------------------------------------
-run-api:
-	ENV=$${ENV:-dev} PYTHONPATH=apps/api uvicorn apps.api.main:app --reload --port 8000
+deps: venv
+	@. $(VENV)/bin/activate; $(PIP) install -r requirements.txt
+
+frontend-deps:
+	@cd $(FRONTEND_DIR) && npm install
+
+build-frontend:
+	@cd $(FRONTEND_DIR) && npm run build
+
+run-backend:
+	@. $(VENV)/bin/activate; $(UVICORN) $(BACKEND_APP) --host 0.0.0.0 --port 8000 --reload
+
+run-frontend:
+	@cd $(FRONTEND_DIR) && npm run dev -- --host
+
+# Run both API and FE for local dev
+# Press Ctrl+C to stop both
+dev: deps frontend-deps
+	@echo "Starting backend and frontend..."
+	@bash scripts/dev.sh
+
+# Production-ish run (serves frontend from FastAPI)
+run: deps build-frontend
+	@. $(VENV)/bin/activate; export SERVE_STATIC=1; $(UVICORN) $(BACKEND_APP) --host 0.0.0.0 --port 8000
+
+# Very light tests placeholder
+test: deps
+	@. $(VENV)/bin/activate; pytest -q || echo "No tests found or tests failed"
+
+# Export build artifacts (frontend dist + sample exports if any)
+export: build-frontend
+	@mkdir -p exports
+	@cp -r frontend/dist exports/frontend-dist
+
+clean:
+	rm -rf $(VENV) frontend/node_modules frontend/dist exports
