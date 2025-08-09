@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 
 from core.config import settings
 from api.v1.api import api_router
+from routers import digital_twin
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,10 +39,22 @@ async def lifespan(app: FastAPI):
     # Shutdown: Clean up resources
     print("Shutting down SatLink Planner API...")
 
+# Create the FastAPI application
 app = FastAPI(
-    title="SatLink Planner API",
-    description="API for LEO satellite pass prediction and link margin analysis",
-    version="0.1.0",
+    title="SatLink Digital Twin API",
+    description="""
+    Digital Twin API for Satellite Operations
+    
+    This API provides comprehensive satellite operations management including:
+    - TLE management and Space-Track.org integration
+    - Collision risk assessment (COLA)
+    - Frequency coordination and ITU-R compliance
+    - Adaptive Coding and Modulation (ACM)
+    - Network topology planning
+    - Handover scheduling
+    - Anomaly detection and AI-powered response
+    """,
+    version="1.0.0",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -51,20 +64,21 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your frontend URL
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Content-Disposition"]
 )
 
 # Include API routers
 app.include_router(api_router, prefix="/api/v1")
+app.include_router(digital_twin.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
     """Root endpoint for preview health check"""
     return {"status": "ok"}
-@app.get("/")
 async def root():
     return {"status": "ok"}
 
