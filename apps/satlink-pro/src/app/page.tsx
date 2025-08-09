@@ -8,6 +8,8 @@ import ActionsBar from "@/components/ActionsBar";
 import { useAppStore } from "@/state/useAppStore";
 import { fetchMargin, fetchPasses, MarginResponse, PassesResponse } from "@/lib/api";
 import { addHours } from "date-fns";
+import { useRealTimeSatellites } from "@/hooks/useRealTimeSatellites";
+import { track } from "@/lib/analytics";
 
 export default function Home() {
   const { selectedNoradId, ground, timeRangeHours, band } = useAppStore();
@@ -30,6 +32,7 @@ export default function Home() {
         ]);
         setPasses(p);
         setMargin(m);
+        track("satellite_searched", { satellite: norad, timestamp: new Date() });
       } catch (e) {
         console.error(e);
         // Graceful demo fallback
@@ -76,12 +79,11 @@ export default function Home() {
     run();
   }, [selectedNoradId, ground.lat, ground.lon, ground.elevation, band, now, end]);
 
+  const live = useRealTimeSatellites();
   const satellites = useMemo(() => {
-    // Minimal sample: show the selected satellite above the ground station (placeholder; real-time would use TLE propagation client-side)
-    return [
-      { id: "sel", name: "Selected", lat: ground.lat + 10, lon: ground.lon + 10, altKm: 500 },
-    ];
-  }, [ground]);
+    if (live.length) return live;
+    return [{ id: "sel", name: "Selected", lat: ground.lat + 10, lon: ground.lon + 10, altKm: 500 }];
+  }, [ground, live]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-black via-zinc-950 to-black text-zinc-100">

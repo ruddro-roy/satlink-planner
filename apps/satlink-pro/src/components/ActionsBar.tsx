@@ -43,6 +43,13 @@ export default function ActionsBar() {
       <button onClick={onExportICS} className="h-10 rounded-lg bg-zinc-800 border border-zinc-700 px-3 hover:bg-zinc-700">Export Calendar</button>
       <button onClick={onDownloadPDF} className="h-10 rounded-lg bg-zinc-800 border border-zinc-700 px-3 hover:bg-zinc-700">Download PDF</button>
       <button onClick={onShare} className="h-10 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-3">Share</button>
+      <a
+        href={`/api/ws/satellites`}
+        className="ml-auto text-xs text-zinc-400 hover:text-zinc-300 underline decoration-dotted"
+        onClick={(e) => e.preventDefault()}
+      >
+        Real-time: WebSocket ready
+      </a>
     </div>
   );
 }

@@ -109,6 +109,9 @@ export default function Dashboard({
           </ul>
         </div>
       </div>
+      {margin?.tle_age_days != null && (
+        <div className="mt-4 text-xs text-zinc-500">TLE age: {margin.tle_age_days.toFixed(1)} days</div>
+      )}
     </motion.div>
   );
 }

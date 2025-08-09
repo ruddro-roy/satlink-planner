@@ -130,6 +130,12 @@ export function Globe3D(props: Props) {
         <OrbitControls enablePan={false} minDistance={200} maxDistance={600} />
       </Canvas>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.15),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(99,102,241,0.15),transparent_40%)]" />
+      {/* Coverage circle overlay for ground station */}
+      {props.ground && (
+        <div className="pointer-events-none absolute bottom-3 right-3 text-[10px] text-zinc-400 bg-zinc-900/60 border border-zinc-700 rounded-md px-2 py-1">
+          Coverage circles shown at 10° mask in future update
+        </div>
+      )}
     </div>
   );
 }

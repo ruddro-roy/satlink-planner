@@ -32,6 +32,12 @@ export type MarginResponse = {
 };
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1").replace(/\/$/, "");
+export const endpoints = {
+  passes: `${API_BASE}/passes`,
+  margin: `${API_BASE}/margin`,
+  export: `${API_BASE}/export`,
+  digitalTwin: `${API_BASE}/digital-twin`,
+};
 
 export async function fetchPasses(args: {
   norad_id: string;
@@ -53,7 +59,7 @@ export async function fetchPasses(args: {
   if (args.end_time) params.set("end_time", args.end_time);
   if (args.max_passes) params.set("max_passes", String(args.max_passes));
 
-  const res = await fetch(`${API_BASE}/passes/?${params.toString()}`);
+  const res = await fetch(`${endpoints.passes}/?${params.toString()}`);
   if (!res.ok) throw new Error(`Passes request failed: ${res.status}`);
   return res.json();
 }
@@ -92,7 +98,7 @@ export async function fetchMargin(args: {
   params.set("end_time", args.end_time);
   if (args.step_s !== undefined) params.set("step_s", String(args.step_s));
 
-  const res = await fetch(`${API_BASE}/margin/?${params.toString()}`);
+  const res = await fetch(`${endpoints.margin}/?${params.toString()}`);
   if (!res.ok) throw new Error(`Margin request failed: ${res.status}`);
   return res.json();
 }
@@ -112,7 +118,7 @@ export function exportICSUrl(args: {
   if (args.elevation !== undefined) params.set("elevation", String(args.elevation));
   if (args.mask !== undefined) params.set("mask", String(args.mask));
   if (args.days !== undefined) params.set("days", String(args.days));
-  return `${API_BASE}/export/ics?${params.toString()}`;
+  return `${endpoints.export}/ics?${params.toString()}`;
 }
 
 export async function exportPDF(args: {
@@ -132,7 +138,7 @@ export async function exportPDF(args: {
   end_time: string;
   step_s?: number;
 }): Promise<Blob> {
-  const res = await fetch(`${API_BASE}/export/pdf`, {
+  const res = await fetch(`${endpoints.export}/pdf`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
