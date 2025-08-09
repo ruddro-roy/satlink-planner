@@ -11,6 +11,7 @@ from domain.repositories import get_repository
 from services.orbit import OrbitPredictor
 from services.link_budget import LinkBudgetCalculator, LinkBudgetParameters, FrequencyBand
 from domain.models import Satellite
+from api.v1.utils import ensure_satellite_in_db
 
 router = APIRouter()
 
@@ -78,10 +79,12 @@ async def get_margin(
         satellite = satellite_repo.get_by_norad_id(norad_id)
         
         if not satellite:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Satellite with NORAD ID {norad_id} not found in database"
-            )
+            satellite = ensure_satellite_in_db(db, norad_id)
+            if not satellite:
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Satellite with NORAD ID {norad_id} not found and could not auto-fetch TLE"
+                )
         
         # Validate TLE data
         if not all([satellite.tle_line1, satellite.tle_line2, satellite.tle_epoch]):
