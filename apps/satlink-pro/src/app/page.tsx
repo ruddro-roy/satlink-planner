@@ -13,6 +13,7 @@ export default function Home() {
   const { selectedNoradId, ground, timeRangeHours, band } = useAppStore();
   const [passes, setPasses] = useState<PassesResponse | null>(null);
   const [margin, setMargin] = useState<MarginResponse | null>(null);
+  const [satInfo, setSatInfo] = useState<{ id: string; name: string; lat: number; lon: number; altKm: number } | null>(null);
 
   const now = useMemo(() => new Date(), []);
   const end = useMemo(() => addHours(now, timeRangeHours), [now, timeRangeHours]);
@@ -91,8 +92,29 @@ export default function Home() {
         </div>
         <ControlPanel />
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <Globe3D satellites={satellites} ground={{ lat: ground.lat, lon: ground.lon }} />
+          <div className="lg:col-span-2 relative">
+            <Globe3D
+              satellites={satellites}
+              ground={{ lat: ground.lat, lon: ground.lon }}
+              onSatelliteClick={(s) => setSatInfo(s)}
+            />
+            {satInfo && (
+              <div className="absolute top-4 left-4 z-10 w-72 rounded-xl bg-zinc-900/80 border border-zinc-800 p-4 backdrop-blur">
+                <div className="text-sm text-zinc-400">Satellite</div>
+                <div className="mt-1 font-semibold">{satInfo.name}</div>
+                <div className="mt-2 text-xs text-zinc-400">Lat {satInfo.lat.toFixed(2)}°, Lon {satInfo.lon.toFixed(2)}°, Alt {Math.round(satInfo.altKm)} km</div>
+                <div className="mt-3 flex gap-2">
+                  <button
+                    onClick={() => setSatInfo(null)}
+                    className="h-8 px-3 rounded-lg bg-zinc-800 border border-zinc-700 text-sm"
+                  >Close</button>
+                  <button
+                    onClick={() => setSatInfo(null)}
+                    className="h-8 px-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"
+                  >Track</button>
+                </div>
+              </div>
+            )}
           </div>
           <div>
             <Dashboard passes={passes} margin={margin} />

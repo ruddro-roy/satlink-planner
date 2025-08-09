@@ -16,7 +16,7 @@ BACK_PID=$!
 # Start frontend (apps/satlink-pro)
 (
   cd "$PROJECT_ROOT"/apps/satlink-pro
-  npm run dev -- --host
+  npm run dev
 ) &
 FRONT_PID=$!
 

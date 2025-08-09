@@ -32,7 +32,7 @@ run-backend:
 	@. $(VENV)/bin/activate; cd $(API_DIR) && $(UVICORN) $(API_APP) --host 0.0.0.0 --port 8000 --reload
 
 run-frontend:
-	@cd $(FRONTEND_DIR) && npm run dev -- --host
+	@cd $(FRONTEND_DIR) && npm run dev
 
 # Run both API and FE for local dev
 # Press Ctrl+C to stop both

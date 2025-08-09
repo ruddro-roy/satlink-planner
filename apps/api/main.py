@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timezone
 import uvicorn
@@ -77,10 +78,8 @@ app.include_router(digital_twin.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
-    """Root endpoint for preview health check"""
-    return {"status": "ok"}
-async def root():
-    return {"status": "ok"}
+    """Redirect root to API docs for a clean landing page"""
+    return RedirectResponse(url="/api/docs")
 
 
 @app.get("/health")
