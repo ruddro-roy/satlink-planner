@@ -1,6 +1,7 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
+
+import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.figure import Figure
 
 from astropy.tests.figures import figure_test
 from astropy.visualization.wcsaxes import WCSAxes
@@ -30,11 +31,12 @@ class HexagonalFrame(BaseFrame):
 
 
 class TestFrame(BaseImageTests):
-    @figure_test(tolerance=0.5)
+    @figure_test
     def test_custom_frame(self):
         wcs = WCS(self.msx_header)
 
-        fig = Figure(figsize=(4, 4))
+        fig = plt.figure(figsize=(4, 4))
+
         ax = WCSAxes(fig, [0.15, 0.15, 0.7, 0.7], wcs=wcs, frame_class=HexagonalFrame)
         fig.add_axes(ax)
 
@@ -45,7 +47,7 @@ class TestFrame(BaseImageTests):
             vmin=0.0,
             vmax=2.0,
             origin="lower",
-            cmap="gist_heat",
+            cmap=plt.cm.gist_heat,
         )
 
         minpad = {}
@@ -72,7 +74,7 @@ class TestFrame(BaseImageTests):
 
     @figure_test
     def test_update_clip_path_rectangular(self, tmp_path):
-        fig = Figure()
+        fig = plt.figure()
         ax = WCSAxes(fig, [0.1, 0.1, 0.8, 0.8], aspect="equal")
 
         fig.add_axes(ax)
@@ -95,7 +97,7 @@ class TestFrame(BaseImageTests):
 
     @figure_test
     def test_update_clip_path_nonrectangular(self, tmp_path):
-        fig = Figure()
+        fig = plt.figure()
         ax = WCSAxes(
             fig, [0.1, 0.1, 0.8, 0.8], aspect="equal", frame_class=HexagonalFrame
         )
@@ -120,7 +122,7 @@ class TestFrame(BaseImageTests):
         # When WCS is changed, a new frame is created, so we need to make sure
         # that the path is carried over to the new frame.
 
-        fig = Figure()
+        fig = plt.figure()
         ax = WCSAxes(fig, [0.1, 0.1, 0.8, 0.8], aspect="equal")
 
         fig.add_axes(ax)
@@ -147,7 +149,7 @@ class TestFrame(BaseImageTests):
         # When WCS is changed, a new frame is created, so we need to make sure
         # that the color and linewidth are transferred over
 
-        fig = Figure()
+        fig = plt.figure()
         ax = WCSAxes(fig, [0.1, 0.1, 0.8, 0.8])
         fig.add_axes(ax)
         ax.coords.frame.set_linewidth(5)

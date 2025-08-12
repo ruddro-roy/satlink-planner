@@ -71,3 +71,19 @@ class LinkBudgetProfile(Base):
     
     def __repr__(self):
         return f"<LinkBudgetProfile(name='{self.name}', freq={self.frequency_ghz}GHz)>"
+
+
+class HorizonMask(Base):
+    """Stored horizon mask for a ground site. Angles are implicit 0..359 deg."""
+    __tablename__ = 'horizon_masks'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=True)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    elevations_deg = Column(JSON, default=list)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<HorizonMask(id={self.id}, size={len(self.elevations_deg) if self.elevations_deg else 0})>"

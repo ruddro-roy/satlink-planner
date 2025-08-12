@@ -10,6 +10,7 @@ from core.db import get_db
 from domain.repositories import get_repository
 from services.orbit import OrbitPredictor
 from services.link_budget import LinkBudgetCalculator, LinkBudgetParameters, FrequencyBand
+from rf.models import compute_link_budget, LinkParams, LinkSample, Modulation, Coding
 from domain.models import Satellite
 from api.v1.utils import ensure_satellite_in_db
 
@@ -148,20 +149,31 @@ async def get_margin(
                 if el < 0:
                     continue
                 
-                # Calculate link budget
-                result = LinkBudgetCalculator.calculate_link_margin(
-                    params=link_params,
-                    distance_km=rng,
-                    elevation_deg=el,
-                    rain_rate_mmph=rain_rate_mmh,
-                    required_cn0_db_hz=required_cn0_db_hz
+                # Calculate link budget via advanced model
+                adv_params = LinkParams(
+                    frequency_hz=(band_params.get('frequency_ghz', 11.5 if band == FrequencyBand.KU else 20.0) * 1e9),
+                    bandwidth_hz=bandwidth_mhz * 1e6,
+                    data_rate_bps=bandwidth_mhz * 1e6,  # assume 1 bps/Hz for visualization
+                    tx_power_dbm=tx_power_dbm,
+                    tx_antenna_gain_dbi=tx_antenna_gain_dbi,
+                    rx_antenna_gain_dbi=rx_antenna_gain_dbi,
+                    system_noise_temp_k=system_noise_temp_k,
+                    implementation_loss_db=link_params.implementation_loss_db,
+                    polarization_mismatch_deg=0.0,
+                    pointing_offset_deg=0.5,
+                    rx_antenna_hpbw_deg=3.0,
+                    rain_rate_mm_per_h=rain_rate_mmh,
+                    modulation=Modulation.QPSK,
+                    coding=Coding.LDPC,
                 )
+                sample = LinkSample(distance_km=rng, elevation_deg=el, radial_rate_m_s=0.0, timestamp=t.isoformat())
+                adv = compute_link_budget([sample], adv_params)[0]
                 
                 # Create margin point
                 point = MarginPoint(
                     timestamp=t,
-                    snr_db=result['cn0_db_hz'] - 10 * np.log10(bandwidth_mhz * 1e6),  # Convert to SNR in bandwidth
-                    margin_db=result['margin_db'],
+                    snr_db=adv['snr_db'],
+                    margin_db=adv['margin_db'],
                     range_km=rng,
                     elevation_deg=el,
                     azimuth_deg=az

@@ -1,6 +1,5 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 """Test setting and adding unit aliases."""
-
 import pytest
 
 import astropy.units as u
@@ -48,7 +47,7 @@ class TestAliases:
             u.Unit(bad)
 
     def test_set_enabled_aliases(self):
-        for aliases, bad, unit in trials:
+        for i, (aliases, bad, unit) in enumerate(trials):
             u.set_enabled_aliases(aliases)
 
             assert u.get_current_unit_registry().aliases == aliases

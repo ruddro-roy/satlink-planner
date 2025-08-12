@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from core.db import get_db
 from domain.repositories import get_repository
 from services.orbit import OrbitPredictor
-from domain.models import Satellite
+from domain.models import Satellite, HorizonMask
 from api.v1.utils import ensure_satellite_in_db
 
 router = APIRouter()
@@ -42,6 +42,7 @@ async def get_passes(
     lon: float = Query(..., ge=-180, le=180, description="Observer longitude in degrees"),
     elevation: float = Query(0.0, description="Observer elevation in meters"),
     mask: float = Query(10.0, ge=0, le=90, description="Elevation mask in degrees"),
+    mask_id: Optional[int] = Query(None, description="Optional horizon mask id"),
     start_time: Optional[datetime] = Query(None, description="Start time for pass search (UTC)"),
     end_time: Optional[datetime] = Query(None, description="End time for pass search (UTC), max 30 days"),
     max_passes: int = Query(10, ge=1, le=100, description="Maximum number of passes to return"),
@@ -105,6 +106,13 @@ async def get_passes(
         passes = []
         current_time = start_time
         
+        # Optional static horizon mask
+        mask_elevs = None
+        if mask_id is not None:
+            hm = db.query(HorizonMask).get(mask_id)
+            if hm and hm.elevations_deg and len(hm.elevations_deg) == 360:
+                mask_elevs = hm.elevations_deg
+        
         while len(passes) < max_passes and current_time < end_time:
             # Find next pass
             pass_data = predictor.find_next_pass(
@@ -119,7 +127,21 @@ async def get_passes(
             
             if not pass_data:
                 break
-                
+            
+            # Apply horizon mask by rejecting passes whose max elevation is below the mask at TCA azimuth
+            if mask_elevs is not None:
+                # compute az at max time
+                try:
+                    az_tca, el_tca, _ = predictor.get_az_el_range(
+                        time=pass_data['max_elevation_time'], lat=lat, lon=lon, elevation=elevation
+                    )
+                    az_idx = int(round(az_tca)) % 360
+                    if el_tca < mask_elevs[az_idx]:
+                        current_time = pass_data['set_time'] + timedelta(minutes=5)
+                        continue
+                except Exception:
+                    pass
+
             # Add pass to results
             passes.append(PassWindow(
                 rise=pass_data['rise_time'],

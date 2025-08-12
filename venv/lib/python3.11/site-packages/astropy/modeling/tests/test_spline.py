@@ -1,7 +1,6 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 
 """Tests for spline models and fitters"""
-
 import unittest.mock as mk
 
 import numpy as np
@@ -127,7 +126,7 @@ class TestSpline:
 
         spl = Spline()
         new_kwargs = spl._intercept_optional_inputs(**self.extra_kwargs)
-        for arg in self.optional_inputs.keys():
+        for arg, value in self.optional_inputs.items():
             attribute = spl._optional_arg(arg)
             assert getattr(spl, attribute) is None
         assert new_kwargs == self.extra_kwargs

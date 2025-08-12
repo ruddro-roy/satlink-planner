@@ -129,6 +129,29 @@ async def export_ics(
             detail=f"Error generating iCalendar: {str(e)}"
         )
 
+
+@router.post("/hamlib")
+async def export_hamlib():
+    return Response(content="# hamlib script placeholder\n", media_type="text/plain")
+
+
+@router.post("/satnogs")
+async def export_satnogs():
+    return {"version": 1, "observations": []}
+
+
+@router.post("/ics")
+async def export_ics_post(
+    norad_id: str,
+    lat: float,
+    lon: float,
+    elevation: float = 0.0,
+    mask: float = 10.0,
+    days: int = 7,
+    db: Session = Depends(get_db),
+):
+    return await export_ics(norad_id=norad_id, lat=lat, lon=lon, elevation=elevation, mask=mask, days=days, db=db)
+
 class PDFExportRequest(BaseModel):
     """Request model for PDF export"""
     norad_id: str

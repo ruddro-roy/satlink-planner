@@ -1,7 +1,6 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 import locale
 import os
-import pkgutil
 import platform
 import urllib.request
 
@@ -10,15 +9,14 @@ import numpy as np
 import pytest
 from numpy.testing import assert_array_equal
 
-import astropy
+from astropy.tests.tests.test_imports import test_imports
 from astropy.time import Time, TimeDelta
 from astropy.utils.data import get_pkg_data_filename
 from astropy.utils.iers import iers
 
-# Import every astropy module as a test that the ERFA leap second
+# Import every top-level astropy module as a test that the ERFA leap second
 # table is not updated for normal imports.
-for finder, name, _ in pkgutil.walk_packages(astropy.__path__, prefix="astropy."):
-    finder.find_spec(name)
+test_imports()
 
 # Now test that the erfa leap_seconds table has not been updated. This must be
 # done at the module level, which unfortunately will abort the entire test run
@@ -277,18 +275,16 @@ class TestDefaultAutoOpen:
         fake_file = make_fake_file("28 June 2345", tmp_path)
         # Try as system file for auto_open, setting auto_max_age such
         # that any ERFA or system files are guaranteed to be expired.
-        with (
-            iers.conf.set_temp("auto_max_age", -100000),
-            iers.conf.set_temp("system_leap_second_file", fake_file),
+        with iers.conf.set_temp("auto_max_age", -100000), iers.conf.set_temp(
+            "system_leap_second_file", fake_file
         ):
             ls = iers.LeapSeconds.open()
         assert ls.expires == Time("2345-06-28", scale="tai")
         assert ls.meta["data_url"] == str(fake_file)
         # And as URL
         fake_url = "file:" + urllib.request.pathname2url(fake_file)
-        with (
-            iers.conf.set_temp("auto_max_age", -100000),
-            iers.conf.set_temp("iers_leap_second_auto_url", fake_url),
+        with iers.conf.set_temp("auto_max_age", -100000), iers.conf.set_temp(
+            "iers_leap_second_auto_url", fake_url
         ):
             ls2 = iers.LeapSeconds.open()
         assert ls2.expires == Time("2345-06-28", scale="tai")
