@@ -1,0 +1,220 @@
+2025-08-14 20:38:45 - main - ERROR - Database health check failed: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2025-08-14 20:38:45 - main - ERROR - Error in rate_limit_middleware: 'State' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/main.py", line 177, in rate_limit_middleware
+    response = await call_next(request)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/sessions.py", line 83, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    response_sent.set()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/core/security.py", line 721, in add_security_headers
+    request_id = request.state.get("request_id")
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/datastructures.py", line 702, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'get'
+2025-08-14 20:38:45 - main - ERROR - Database health check failed: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2025-08-14 20:38:45 - main - ERROR - Unhandled exception: 'State' object has no attribute 'get'
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 87, in collapse_excgroups
+  |     yield
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+  |     response_sent.set()
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    |     response_sent.set()
+    |   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    |     self.gen.throw(type, value, traceback)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/main.py", line 194, in rate_limit_middleware
+    |     return await call_next(request)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 165, in call_next
+    |     raise app_exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 151, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/sessions.py", line 83, in __call__
+    |     await self.app(scope, receive, send_wrapper)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    |     response_sent.set()
+    |   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    |     self.gen.throw(type, value, traceback)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/core/security.py", line 721, in add_security_headers
+    |     request_id = request.state.get("request_id")
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/datastructures.py", line 702, in __getattr__
+    |     raise AttributeError(message.format(self.__class__.__name__, key))
+    | AttributeError: 'State' object has no attribute 'get'
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    response_sent.set()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/main.py", line 194, in rate_limit_middleware
+    return await call_next(request)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/sessions.py", line 83, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    response_sent.set()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/core/security.py", line 721, in add_security_headers
+    request_id = request.state.get("request_id")
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/datastructures.py", line 702, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'get'
+2025-08-14 20:38:45 - uvicorn.error - ERROR - Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 87, in collapse_excgroups
+  |     yield
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+  |     response_sent.set()
+  |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    |     return await self.app(scope, receive, send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    |     response_sent.set()
+    |   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    |     self.gen.throw(type, value, traceback)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/main.py", line 194, in rate_limit_middleware
+    |     return await call_next(request)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 165, in call_next
+    |     raise app_exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 151, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/sessions.py", line 83, in __call__
+    |     await self.app(scope, receive, send_wrapper)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    |     response_sent.set()
+    |   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    |     self.gen.throw(type, value, traceback)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/core/security.py", line 721, in add_security_headers
+    |     request_id = request.state.get("request_id")
+    |   File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/datastructures.py", line 702, in __getattr__
+    |     raise AttributeError(message.format(self.__class__.__name__, key))
+    | AttributeError: 'State' object has no attribute 'get'
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    response_sent.set()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/main.py", line 194, in rate_limit_middleware
+    return await call_next(request)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/sessions.py", line 83, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 193, in __call__
+    response_sent.set()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/contextlib.py", line 135, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "/Users/ruddroroy/Downloads/satlink-planner/apps/api/core/security.py", line 721, in add_security_headers
+    request_id = request.state.get("request_id")
+  File "/Users/ruddroroy/Downloads/satlink-planner/.venv/lib/python3.9/site-packages/starlette/datastructures.py", line 702, in __getattr__
+    raise AttributeError(message.format(self.__class__.__name__, key))
+AttributeError: 'State' object has no attribute 'get'

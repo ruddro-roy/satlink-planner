@@ -58,9 +58,8 @@ function GlobeInner({ satellites, ground, onSatelliteClick }: Props) {
     };
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (!globe) return;
-    // Dark theme with blue oceans
     globe
       .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-dark.jpg")
       .bumpImageUrl("https://unpkg.com/three-globe/example/img/earth-topology.png")
@@ -68,7 +67,7 @@ function GlobeInner({ satellites, ground, onSatelliteClick }: Props) {
       .atmosphereAltitude(0.2);
   }, [globe]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (!globe) return;
     const satPoints: GlobePoint[] = satellites.map((s) => ({
       type: "sat",
@@ -100,11 +99,15 @@ function GlobeInner({ satellites, ground, onSatelliteClick }: Props) {
       .pointColor("color")
       .pointAltitude((d: GlobePoint) => (d.type === "sat" ? 0.01 + (d.altKm || 500) / 20000 : 0.01))
       .pointRadius("size");
-    globe.onPointClick((d) => {
-      if (d.type === "sat" && onSatelliteClick) {
-        onSatelliteClick({ id: d.id, name: d.name, lat: d.lat, lon: d.lng, altKm: d.altKm });
-      }
-    });
+    if (globe && typeof globe.onPointClick === 'function') {
+      globe.onPointClick((d, event) => {
+        if (d.type === "sat" && onSatelliteClick) {
+          onSatelliteClick({ id: d.id, name: d.name, lat: d.lat, lon: d.lng, altKm: d.altKm });
+        }
+      });
+    } else {
+      console.warn('onPointClick not available on globe instance');
+    }
   }, [globe, satellites, ground, onSatelliteClick]);
 
   useFrame(() => {

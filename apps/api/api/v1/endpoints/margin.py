@@ -10,7 +10,7 @@ from core.db import get_db
 from domain.repositories import get_repository
 from services.orbit import OrbitPredictor
 from services.link_budget import LinkBudgetCalculator, LinkBudgetParameters, FrequencyBand
-from rf.models import compute_link_budget, LinkParams, LinkSample, Modulation, Coding
+from rf.models import compute_link_budget, LinkParams, LinkSample, Modulation, CodingScheme
 from domain.models import Satellite
 from api.v1.utils import ensure_satellite_in_db
 
@@ -164,7 +164,7 @@ async def get_margin(
                     rx_antenna_hpbw_deg=3.0,
                     rain_rate_mm_per_h=rain_rate_mmh,
                     modulation=Modulation.QPSK,
-                    coding=Coding.LDPC,
+                    coding_scheme=CodingScheme.LDPC,
                 )
                 sample = LinkSample(distance_km=rng, elevation_deg=el, radial_rate_m_s=0.0, timestamp=t.isoformat())
                 adv = compute_link_budget([sample], adv_params)[0]

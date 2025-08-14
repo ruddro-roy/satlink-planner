@@ -1,4 +1,4 @@
-#!/Users/ruddroroy/Downloads/satlink-planner/venv/bin/python
+#!/Users/ruddroroy/Downloads/satlink-planner/venv/bin/python3.11
 import sys
 from dotenv.__main__ import cli
 if __name__ == '__main__':

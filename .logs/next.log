@@ -1,0 +1,19 @@
+ ⚠ Port 3000 is in use by process 48330
+67583, using available port 3001 instead.
+   ▲ Next.js 15.4.6
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.1.101:3001
+
+ ✓ Starting...
+ ✓ Ready in 1715ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+ ○ Compiling / ...
+ ✓ Compiled / in 9s (4225 modules)
+ GET / 200 in 9571ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 593ms (2171 modules)
+ GET /favicon.ico 200 in 829ms
+ GET / 200 in 1041ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies

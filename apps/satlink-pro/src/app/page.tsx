@@ -10,6 +10,7 @@ import { fetchMargin, fetchPasses, MarginResponse, PassesResponse } from "@/lib/
 import { addHours } from "date-fns";
 import { useRealTimeSatellites } from "@/hooks/useRealTimeSatellites";
 import { track } from "@/lib/analytics";
+import SatelliteGlobe from "../components/SatelliteGlobe";
 
 export default function Home() {
   const { selectedNoradId, ground, timeRangeHours, band } = useAppStore();

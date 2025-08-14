@@ -32,6 +32,13 @@ export type MarginResponse = {
 };
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1").replace(/\/$/, "");
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+function authHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {};
+  if (API_KEY) headers["X-API-Key"] = API_KEY;
+  return headers;
+}
 export const endpoints = {
   passes: `${API_BASE}/passes`,
   margin: `${API_BASE}/margin`,
@@ -59,7 +66,9 @@ export async function fetchPasses(args: {
   if (args.end_time) params.set("end_time", args.end_time);
   if (args.max_passes) params.set("max_passes", String(args.max_passes));
 
-  const res = await fetch(`${endpoints.passes}/?${params.toString()}`);
+  const res = await fetch(`${endpoints.passes}/?${params.toString()}`, {
+    headers: authHeaders(),
+  });
   if (!res.ok) throw new Error(`Passes request failed: ${res.status}`);
   return res.json();
 }
@@ -98,7 +107,9 @@ export async function fetchMargin(args: {
   params.set("end_time", args.end_time);
   if (args.step_s !== undefined) params.set("step_s", String(args.step_s));
 
-  const res = await fetch(`${endpoints.margin}/?${params.toString()}`);
+  const res = await fetch(`${endpoints.margin}/?${params.toString()}`, {
+    headers: authHeaders(),
+  });
   if (!res.ok) throw new Error(`Margin request failed: ${res.status}`);
   return res.json();
 }
@@ -118,6 +129,8 @@ export function exportICSUrl(args: {
   if (args.elevation !== undefined) params.set("elevation", String(args.elevation));
   if (args.mask !== undefined) params.set("mask", String(args.mask));
   if (args.days !== undefined) params.set("days", String(args.days));
+  // Include API key in query for downloadable links (headers are not used by browser navigation)
+  if (API_KEY) params.set("api_key", API_KEY);
   return `${endpoints.export}/ics?${params.toString()}`;
 }
 
@@ -140,7 +153,7 @@ export async function exportPDF(args: {
 }): Promise<Blob> {
   const res = await fetch(`${endpoints.export}/pdf`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...authHeaders() },
     body: JSON.stringify({
       norad_id: args.norad_id,
       lat: args.lat,
